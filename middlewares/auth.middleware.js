@@ -14,11 +14,16 @@ function setUser(user) {
 
 function getUser(req, res, next) {
 	const token = req.cookies?.uid || req.headers.authorization?.split(" ")[1];
-	if (!token) return null;
-	const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-	req.user = decoded;
-	console.log("Decoded user:", decoded); // Add logging to check the decoded user
-	next();
+	if (!token)
+		return res.status(401).json({ msg: "No token, authorization denied" });
+	try {
+		const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+		req.user = decoded;
+		console.log("Decoded user:", decoded.id); // Add logging to check the decoded user
+		next();
+	} catch (err) {
+		return res.status(401).json({ msg: "Token is not valid" });
+	}
 }
 
 export { setUser, getUser };

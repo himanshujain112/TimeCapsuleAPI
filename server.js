@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import userRouter from "./routes/user.routes.js";
+import capsuleRouter from "./routes/capsule.routes.js";
 import { getUser } from "./middlewares/auth.middleware.js";
 import cookieParser from "cookie-parser";
 const app = express();
@@ -20,4 +21,6 @@ app.get("/", getUser, (req, res) => {
 });
 
 app.use("/auth", userRouter);
+app.use("/capsule", capsuleRouter);
+
 export default app;

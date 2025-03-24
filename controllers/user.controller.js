@@ -36,7 +36,7 @@ const loginUser = asyncHandler(async (req, res) => {
 	console.log(user, " logged in");
 	//return res.status(200).json({ msg: "user logged in" });
 
-	const token = setUser(body);
+	const token = setUser(user);
 	res.cookie("uid", token);
 	console.log(token);
 	return res.status(200).json({ msg: "user logged in" });
